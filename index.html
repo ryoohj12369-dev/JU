@@ -1,0 +1,1595 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIM MIN WOO | Architectural Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        arch: {
+                            dark: '#0f1115',
+                            card: '#181b20',
+                            accent: '#c8a97e',
+                            accentHover: '#dbb98a',
+                            lightBg: '#f8f9fa',
+                            lightCard: '#ffffff',
+                            muted: '#8e95a0'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'Inter', 'sans-serif'],
+                        display: ['Syne', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Syne:wght@400;600;700;800&family=Space+Mono&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            overflow-x: hidden;
+        }
+        .font-display {
+            font-family: 'Syne', sans-serif;
+        }
+        .font-mono {
+            font-family: 'Space Mono', monospace;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f1115;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2a2e37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c8a97e;
+        }
+        /* Grid blueprint background simulation */
+        .bg-grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        .bg-grid-light {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        }
+        .glass-panel {
+            background: rgba(24, 27, 32, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-panel-light {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        /* Glowing hover transition */
+        .hover-architectural {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .hover-architectural:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -15px rgba(200, 169, 126, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-arch-dark text-gray-100 transition-colors duration-300 dark" id="bodyElement">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 left-0 w-full z-50 transition-all duration-300 glass-panel border-b border-white/10" id="mainHeader">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 border-2 border-arch-accent flex items-center justify-center font-display font-bold text-lg text-arch-accent group-hover:bg-arch-accent group-hover:text-black transition-all duration-300">
+                    MW
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-display font-bold tracking-widest text-lg text-white dark:text-white text-gray-900 group-hover:text-arch-accent transition-colors">
+                        KIM jun ho
+                    </span>
+                    <span class="text-[10px] text-arch-muted uppercase tracking-widest font-mono">ARCHITECT &amp; SPATIAL DESIGNER</span>
+                </div>
+            </a>
+
+            <!-- Desktop Menu -->
+            <nav class="hidden md:flex items-center gap-8 text-sm font-medium tracking-wider uppercase font-mono">
+                <a href="#about" class="hover:text-arch-accent transition-colors hover:underline underline-offset-8 decoration-arch-accent">ABOUT</a>
+                <a href="#projects" class="hover:text-arch-accent transition-colors hover:underline underline-offset-8 decoration-arch-accent">PROJECTS</a>
+                <a href="#lab3d" class="hover:text-arch-accent transition-colors hover:underline underline-offset-8 decoration-arch-accent flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-arch-accent animate-pulse"></span> 3D LAB
+                </a>
+                <a href="#blueprint" class="hover:text-arch-accent transition-colors hover:underline underline-offset-8 decoration-arch-accent">BLUEPRINT</a>
+                <a href="#experience" class="hover:text-arch-accent transition-colors hover:underline underline-offset-8 decoration-arch-accent">CV &amp; CAREER</a>
+                <a href="#contact" class="hover:text-arch-accent transition-colors hover:underline underline-offset-8 decoration-arch-accent">CONTACT</a>
+            </nav>
+
+            <!-- Actions (Theme Toggle + CTA) -->
+            <div class="hidden md:flex items-center gap-4">
+                <button id="themeToggle" class="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-arch-muted hover:text-arch-accent hover:border-arch-accent transition-all" title="Toggle Theme">
+                    <i class="fa-solid fa-moon text-sm" id="themeIcon"></i>
+                </button>
+                <a href="#contact" class="px-5 py-2.5 bg-arch-accent text-black font-mono text-xs uppercase tracking-widest font-bold hover:bg-arch-accentHover transition-all rounded-sm flex items-center gap-2">
+                    INQUIRE <i class="fa-solid fa-arrow-right text-xs"></i>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" class="md:hidden text-2xl text-white focus:outline-none p-2">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Nav Menu -->
+        <div id="mobileNav" class="hidden md:hidden bg-arch-card border-b border-white/10 px-6 py-6 flex-col gap-4 text-sm font-mono tracking-wider">
+            <a href="#about" class="py-2 hover:text-arch-accent transition-colors border-b border-white/5">ABOUT</a>
+            <a href="#projects" class="py-2 hover:text-arch-accent transition-colors border-b border-white/5">PROJECTS</a>
+            <a href="#lab3d" class="py-2 hover:text-arch-accent transition-colors border-b border-white/5 flex items-center justify-between">
+                <span>3D LAB</span>
+                <span class="text-xs bg-arch-accent/20 text-arch-accent px-2 py-0.5 rounded">Interactive</span>
+            </a>
+            <a href="#blueprint" class="py-2 hover:text-arch-accent transition-colors border-b border-white/5">BLUEPRINT VIEWER</a>
+            <a href="#experience" class="py-2 hover:text-arch-accent transition-colors border-b border-white/5">CV &amp; CAREER</a>
+            <a href="#contact" class="py-2 hover:text-arch-accent transition-colors">CONTACT</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-24 pb-12 overflow-hidden bg-grid-pattern">
+        <!-- Background Decorative Architectural Circles/Grids -->
+        <div class="absolute inset-0 pointer-events-none opacity-20 flex items-center justify-center">
+            <div class="w-[600px] h-[600px] border border-white/20 rounded-full animate-spin-slow"></div>
+            <div class="absolute w-[900px] h-[900px] border border-dashed border-white/10 rounded-full"></div>
+            <div class="absolute w-[300px] h-[300px] border border-arch-accent/30 rounded-full"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center relative z-10 w-full">
+            <!-- Left Text Content -->
+            <div class="lg:col-span-7 flex flex-col justify-center">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-arch-accent/30 bg-arch-accent/10 text-arch-accent text-xs font-mono uppercase tracking-widest mb-6 w-max">
+                    <span class="w-2 h-2 rounded-full bg-arch-accent"></span> Architectural Design &amp; Parametric Research
+                </div>
+                
+                <h1 class="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-[1.1] mb-6">
+                    ARCHITECTURE <br/>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-arch-accent via-amber-200 to-white">
+                        THAT BREATHES
+                    </span> <br/>
+                    &amp; TRANSFORMS.
+                </h1>
+
+                <p class="text-gray-400 text-base sm:text-lg max-w-xl font-light leading-relaxed mb-8">
+                    자연과의 조화, 기하학적 파라메트릭 구조, 그리고 지속 가능한 미래 공간을 설계하는 건축가 <strong class="text-white font-medium">김민우</strong>입니다. 형태와 기능의 조화를 넘어 삶의 서사를 담아내는 공간을 창조합니다.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-4">
+                    <a href="#projects" class="px-8 py-4 bg-arch-accent text-black font-mono font-bold text-sm tracking-wider uppercase hover:bg-arch-accentHover transition-all shadow-lg shadow-arch-accent/20 flex items-center gap-3 group">
+                        EXPLORE WORKS
+                        <i class="fa-solid fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
+                    </a>
+                    <a href="#lab3d" class="px-8 py-4 border border-white/20 hover:border-arch-accent text-white hover:text-arch-accent font-mono text-sm tracking-wider uppercase transition-all glass-panel flex items-center gap-3">
+                        <i class="fa-solid fa-cube text-arch-accent"></i> 3D STUDIO MODEL
+                    </a>
+                </div>
+
+                <!-- Stats summary bar -->
+                <div class="grid grid-cols-3 gap-6 mt-16 pt-8 border-t border-white/10 max-w-lg">
+                    <div>
+                        <div class="font-display text-3xl font-bold text-white font-mono">12<span class="text-arch-accent">+</span></div>
+                        <div class="text-xs text-arch-muted uppercase font-mono tracking-wider mt-1">Completed Projects</div>
+                    </div>
+                    <div>
+                        <div class="font-display text-3xl font-bold text-white font-mono">05</div>
+                        <div class="text-xs text-arch-muted uppercase font-mono tracking-wider mt-1">Design Awards</div>
+                    </div>
+                    <div>
+                        <div class="font-display text-3xl font-bold text-white font-mono">08<span class="text-arch-accent">Y</span></div>
+                        <div class="text-xs text-arch-muted uppercase font-mono tracking-wider mt-1">Experience</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Visual Interactive Preview Graphic -->
+            <div class="lg:col-span-5 relative">
+                <div class="relative rounded-2xl overflow-hidden glass-panel p-2 shadow-2xl border border-white/15">
+                    <!-- Architectural Graphic Sketch Canvas -->
+                    <div class="aspect-[4/5] bg-arch-card relative rounded-xl overflow-hidden flex items-center justify-center group">
+                        <!-- Abstract Architectural Render Simulation -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+                        <div class="w-full h-full relative" id="heroGraphicCanvas">
+                            <!-- Geometric Architectural Blueprint Overlay -->
+                            <svg class="w-full h-full object-cover opacity-80" viewBox="0 0 500 625" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="500" height="625" fill="#12151a"/>
+                                <!-- Perspective Grid Lines -->
+                                <path d="M0 500 L500 500 M0 550 L500 550 M0 600 L500 600" stroke="#2a303c" stroke-width="1"/>
+                                <path d="M250 0 L250 625 M100 0 L100 625 M400 0 L400 625" stroke="#2a303c" stroke-width="1" stroke-dasharray="4 4"/>
+                                <!-- Modern Architectural Building Massing Art -->
+                                <polygon points="120,520 120,200 280,120 280,480" fill="url(#grad1)" stroke="#c8a97e" stroke-width="1.5"/>
+                                <polygon points="280,120 400,180 400,500 280,480" fill="url(#grad2)" stroke="#c8a97e" stroke-width="1.5"/>
+                                <polygon points="120,200 240,140 280,120 120,200" fill="#3a4250" opacity="0.6"/>
+                                <!-- Floating Parametric Cantilever -->
+                                <polygon points="70,320 220,240 220,310 70,390" fill="#c8a97e" opacity="0.3" stroke="#c8a97e" stroke-width="1.5"/>
+                                <line x1="70" y1="320" x2="70" y2="390" stroke="#c8a97e" stroke-width="2"/>
+                                <!-- Sun & Shadow Rays -->
+                                <circle cx="380" cy="90" r="30" fill="#c8a97e" opacity="0.2"/>
+                                <circle cx="380" cy="90" r="15" fill="#c8a97e" opacity="0.5"/>
+                                <line x1="380" y1="90" x2="280" y2="120" stroke="#c8a97e" stroke-width="1" stroke-dasharray="2 2" opacity="0.6"/>
+                                <line x1="380" y1="90" x2="120" y2="200" stroke="#c8a97e" stroke-width="1" stroke-dasharray="2 2" opacity="0.4"/>
+                                <!-- Annotations -->
+                                <text x="130" y="230" fill="#c8a97e" font-family="Space Mono" font-size="10">LEVEL 04 - CANTILEVER [+18.5m]</text>
+                                <text x="290" y="460" fill="#ffffff" font-family="Space Mono" font-size="10" opacity="0.6">CURTAIN WALL FACADE</text>
+                                <circle cx="280" cy="120" r="4" fill="#c8a97e"/>
+                                <circle cx="120" cy="200" r="4" fill="#c8a97e"/>
+                                <defs>
+                                    <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#1f242d" />
+                                        <stop offset="100%" stop-color="#0f1115" />
+                                    </linearGradient>
+                                    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                        <stop offset="0%" stop-color="#2c3340" />
+                                        <stop offset="100%" stop-color="#161920" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                        </div>
+
+                        <!-- Overlay Badge -->
+                        <div class="absolute bottom-6 left-6 right-6 z-20 flex items-center justify-between glass-panel p-4 rounded-lg border border-white/10">
+                            <div>
+                                <span class="text-xs text-arch-accent font-mono uppercase block">Featured Concept</span>
+                                <span class="font-display font-bold text-white text-base">The Dynamic Horizon Pavilion</span>
+                            </div>
+                            <a href="#lab3d" class="w-10 h-10 rounded-full bg-arch-accent text-black flex items-center justify-center hover:scale-110 transition-transform">
+                                <i class="fa-solid fa-cube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About & Philosophy Section -->
+    <section id="about" class="py-24 bg-arch-card/50 relative border-y border-white/5">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
+                <div>
+                    <span class="text-xs text-arch-accent font-mono uppercase tracking-widest block mb-2">// PHILOSOPHY &amp; PROFILE</span>
+                    <h2 class="font-display text-3xl sm:text-5xl font-bold tracking-tight">
+                        DESIGNING FOR PERPETUITY
+                    </h2>
+                </div>
+                <p class="text-arch-muted max-w-md text-sm mt-4 md:mt-0 font-light">
+                    건축은 단지 물리적 구조물을 세우는 것이 아니라, 환경과 인간의 상호작용을 중재하는 지능적인 유기체입니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Profile Image & Badge -->
+                <div class="lg:col-span-5">
+                    <div class="relative group">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-arch-accent to-amber-600 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+                        <div class="relative aspect-[4/5] bg-arch-card rounded-xl overflow-hidden border border-white/10">
+                            <!-- Styled Architectural Portrait Canvas/SVG -->
+                            <svg class="w-full h-full object-cover" viewBox="0 0 400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect width="400" height="500" fill="#181b20"/>
+                                <circle cx="200" cy="180" r="70" fill="#2d333e"/>
+                                <path d="M90 420 C90 310, 310 310, 310 420 Z" fill="#232832"/>
+                                <!-- Grid Lines Overlay on Portrait -->
+                                <path d="M0 100 H400 M0 200 H400 M0 300 H400 M0 400 H400" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+                                <path d="M100 0 V500 M200 0 V500 M300 0 V500" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+                                <!-- Geometric Accents -->
+                                <circle cx="200" cy="180" r="75" stroke="#c8a97e" stroke-width="1" stroke-dasharray="4 4"/>
+                                <text x="20" y="470" fill="#c8a97e" font-family="Space Mono" font-size="12">KIM MIN WOO — PRINCIPAL ARCHITECT</text>
+                            </svg>
+                            <div class="absolute inset-0 bg-gradient-to-t from-arch-dark via-transparent to-transparent opacity-80"></div>
+                            
+                            <div class="absolute bottom-6 left-6 right-6">
+                                <p class="text-xs font-mono text-arch-accent uppercase mb-1">Architectural License</p>
+                                <p class="text-white font-bold text-lg">KIRA Registered Architect (#2021-9842)</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bio & Competencies -->
+                <div class="lg:col-span-7 space-y-8">
+                    <div class="space-y-4">
+                        <h3 class="text-2xl font-display font-bold text-white">
+                            "지속 가능한 구조와 감성적인 공간 경험의 결합"
+                        </h3>
+                        <p class="text-gray-300 font-light leading-relaxed">
+                            서울대학교 건축학과를 졸업하고, 8년간 국내외 대표 건축사사무소에서 다양한 규모의 주거, 상업, 문화 공간 프로젝트를 성공적으로 수행해왔습니다. 디지털 파라메트릭 디자인 기술과 전통적인 공간 감각을 결합하여, 독창적이면서도 시공 가능한 건축 솔루션을 제시합니다.
+                        </p>
+                    </div>
+
+                    <!-- Core Competencies Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4">
+                        <div class="glass-panel p-5 rounded-lg border border-white/5 hover:border-arch-accent/40 transition-colors">
+                            <div class="w-10 h-10 rounded bg-arch-accent/10 flex items-center justify-center text-arch-accent text-lg mb-3">
+                                <i class="fa-solid fa-compass-drafting"></i>
+                            </div>
+                            <h4 class="text-white font-bold text-base mb-1">Parametric &amp; Generative</h4>
+                            <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                Rhino &amp; Grasshopper를 활용한 복잡한 곡면 및 알고리즘 기반 매싱 제어.
+                            </p>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-lg border border-white/5 hover:border-arch-accent/40 transition-colors">
+                            <div class="w-10 h-10 rounded bg-arch-accent/10 flex items-center justify-center text-arch-accent text-lg mb-3">
+                                <i class="fa-solid fa-leaf"></i>
+                            </div>
+                            <h4 class="text-white font-bold text-base mb-1">Sustainable Architecture</h4>
+                            <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                일조량, 통풍, 패시브 솔루션을 반영한 친환경 에너지를 고려한 공간 설계.
+                            </p>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-lg border border-white/5 hover:border-arch-accent/40 transition-colors">
+                            <div class="w-10 h-10 rounded bg-arch-accent/10 flex items-center justify-center text-arch-accent text-lg mb-3">
+                                <i class="fa-solid fa-cubes"></i>
+                            </div>
+                            <h4 class="text-white font-bold text-base mb-1">BIM &amp; Technical Detailing</h4>
+                            <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                Revit 기반 정밀 3D 모델링, 디테일 도면 제작 및 시공성 검토.
+                            </p>
+                        </div>
+
+                        <div class="glass-panel p-5 rounded-lg border border-white/5 hover:border-arch-accent/40 transition-colors">
+                            <div class="w-10 h-10 rounded bg-arch-accent/10 flex items-center justify-center text-arch-accent text-lg mb-3">
+                                <i class="fa-solid fa-vr-cardboard"></i>
+                            </div>
+                            <h4 class="text-white font-bold text-base mb-1">Photorealistic Visualization</h4>
+                            <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                V-Ray, Enscape, Twinmotion을 이용한 실감형 렌더링 및 VR 워크스루.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Software Tool Badges -->
+                    <div class="pt-4">
+                        <span class="text-xs text-arch-muted font-mono uppercase block mb-3">SOFTWARE &amp; TOOLS STACK</span>
+                        <div class="flex flex-wrap gap-2 font-mono text-xs">
+                            <span class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-gray-300">Rhino 3D</span>
+                            <span class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-gray-300">Grasshopper</span>
+                            <span class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-gray-300">Autodesk Revit</span>
+                            <span class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-gray-300">AutoCAD</span>
+                            <span class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-gray-300">V-Ray</span>
+                            <span class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-gray-300">Enscape</span>
+                            <span class="px-3 py-1.5 rounded bg-white/5 border border-white/10 text-gray-300">Adobe Creative Suite</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs text-arch-accent font-mono uppercase tracking-widest block mb-2">// SELECTED WORKS</span>
+                    <h2 class="font-display text-3xl sm:text-5xl font-bold tracking-tight">
+                        PORTFOLIO PROJECTS
+                    </h2>
+                </div>
+                <!-- Category Filter Tabs -->
+                <div class="flex flex-wrap gap-2 mt-6 md:mt-0 font-mono text-xs">
+                    <button class="filter-btn active px-4 py-2 rounded border border-arch-accent bg-arch-accent text-black font-bold uppercase transition-all" data-filter="all">ALL</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-arch-muted hover:border-arch-accent hover:text-white uppercase transition-all" data-filter="residential">주거 (RESIDENTIAL)</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-arch-muted hover:border-arch-accent hover:text-white uppercase transition-all" data-filter="commercial">상업 (COMMERCIAL)</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-arch-muted hover:border-arch-accent hover:text-white uppercase transition-all" data-filter="cultural">공공/문화 (CULTURAL)</button>
+                    <button class="filter-btn px-4 py-2 rounded border border-white/10 text-arch-muted hover:border-arch-accent hover:text-white uppercase transition-all" data-filter="parametric">파라메트릭 (CONCEPT)</button>
+                </div>
+            </div>
+
+            <!-- Project Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+                
+                <!-- Project 1: Residential Villa -->
+                <div class="project-card group glass-panel rounded-xl overflow-hidden hover-architectural cursor-pointer border border-white/10" data-category="residential" onclick="openProjectModal('proj1')">
+                    <div class="aspect-[4/3] bg-arch-card relative overflow-hidden">
+                        <!-- Custom SVG Architectural Render Graphic -->
+                        <svg class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" viewBox="0 0 400 300" fill="none">
+                            <rect width="400" height="300" fill="#13161c"/>
+                            <!-- Building Vector Graphic -->
+                            <polygon points="50,250 180,180 350,220 350,270 50,270" fill="#1c212b"/>
+                            <polygon points="50,180 180,110 350,150 350,220 180,180 50,250" fill="#28303f" stroke="#c8a97e" stroke-width="1"/>
+                            <!-- Glass facade horizontal stripes -->
+                            <line x1="80" y1="180" x2="160" y2="140" stroke="#c8a97e" stroke-width="2" opacity="0.8"/>
+                            <line x1="80" y1="200" x2="160" y2="160" stroke="#c8a97e" stroke-width="2" opacity="0.8"/>
+                            <line x1="200" y1="135" x2="320" y2="165" stroke="#7e9cc8" stroke-width="2" opacity="0.6"/>
+                            <!-- Pine tree silhouette -->
+                            <path d="M30 270 L40 220 L50 270 Z" fill="#0f1115"/>
+                            <path d="M360 270 L370 200 L380 270 Z" fill="#0f1115"/>
+                        </svg>
+                        <div class="absolute top-4 left-4 font-mono text-[10px] bg-black/60 text-arch-accent px-2.5 py-1 rounded border border-arch-accent/30 uppercase tracking-widest">
+                            RESIDENTIAL / 2024
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-arch-muted font-mono mb-2">
+                            <span>SEOUL, SOUTH KOREA</span>
+                            <span>450 m²</span>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white group-hover:text-arch-accent transition-colors mb-2">
+                            The Prism Residence (프리즘 하우스)
+                        </h3>
+                        <p class="text-gray-400 text-xs font-light line-clamp-2 leading-relaxed">
+                            자연광의 굴절과 각도를 최적화하여 사계절의 빛 변화를 내부 공간으로 끌어들인 단독주택 설계.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-arch-accent">
+                            <span>VIEW DETAILS</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2: Commercial Tower -->
+                <div class="project-card group glass-panel rounded-xl overflow-hidden hover-architectural cursor-pointer border border-white/10" data-category="commercial" onclick="openProjectModal('proj2')">
+                    <div class="aspect-[4/3] bg-arch-card relative overflow-hidden">
+                        <svg class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" viewBox="0 0 400 300" fill="none">
+                            <rect width="400" height="300" fill="#0e1117"/>
+                            <!-- High rise skyscraper design -->
+                            <polygon points="140,280 140,50 240,30 240,280" fill="#1e2430" stroke="#c8a97e" stroke-width="1"/>
+                            <polygon points="240,30 280,60 280,280 240,280" fill="#141822"/>
+                            <!-- Window Grid -->
+                            <path d="M150 70 H230 M150 100 H230 M150 130 H230 M150 160 H230 M150 190 H230 M150 220 H230" stroke="#c8a97e" stroke-width="1" stroke-dasharray="2 2"/>
+                            <!-- Parametric Facade Twist Lines -->
+                            <path d="M140 280 C180 200, 200 100, 240 30" stroke="#c8a97e" stroke-width="1.5"/>
+                        </svg>
+                        <div class="absolute top-4 left-4 font-mono text-[10px] bg-black/60 text-arch-accent px-2.5 py-1 rounded border border-arch-accent/30 uppercase tracking-widest">
+                            COMMERCIAL / 2023
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-arch-muted font-mono mb-2">
+                            <span>PANGYO, SOUTH KOREA</span>
+                            <span>12,800 m²</span>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white group-hover:text-arch-accent transition-colors mb-2">
+                            Nexus Kinetic Tower (네커스 타워)
+                        </h3>
+                        <p class="text-gray-400 text-xs font-light line-clamp-2 leading-relaxed">
+                            키네틱 파사드 시스템을 적용하여 태양 고도에 따라 일조 차양막이 자동으로 조절되는 오피스 타워.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-arch-accent">
+                            <span>VIEW DETAILS</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3: Cultural Center -->
+                <div class="project-card group glass-panel rounded-xl overflow-hidden hover-architectural cursor-pointer border border-white/10" data-category="cultural" onclick="openProjectModal('proj3')">
+                    <div class="aspect-[4/3] bg-arch-card relative overflow-hidden">
+                        <svg class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" viewBox="0 0 400 300" fill="none">
+                            <rect width="400" height="300" fill="#12161f"/>
+                            <!-- Cantilevered Art Museum Structure -->
+                            <polygon points="60,240 340,240 340,270 60,270" fill="#202633"/>
+                            <polygon points="40,160 280,160 240,220 80,220" fill="#2e374a" stroke="#c8a97e" stroke-width="1.5"/>
+                            <polygon points="120,100 360,100 320,150 160,150" fill="#3b465e" stroke="#c8a97e" stroke-width="1.5"/>
+                        </svg>
+                        <div class="absolute top-4 left-4 font-mono text-[10px] bg-black/60 text-arch-accent px-2.5 py-1 rounded border border-arch-accent/30 uppercase tracking-widest">
+                            CULTURAL / 2024
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-arch-muted font-mono mb-2">
+                            <span>BUSAN, SOUTH KOREA</span>
+                            <span>3,200 m²</span>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white group-hover:text-arch-accent transition-colors mb-2">
+                            Ocean Horizon Art Museum (해양 아트 뮤지엄)
+                        </h3>
+                        <p class="text-gray-400 text-xs font-light line-clamp-2 leading-relaxed">
+                            바다 수평선을 확장하는 캔틸레버 구조로 설계된 대중 문화 예술 미술관.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-arch-accent">
+                            <span>VIEW DETAILS</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4: Parametric Pavilion -->
+                <div class="project-card group glass-panel rounded-xl overflow-hidden hover-architectural cursor-pointer border border-white/10" data-category="parametric" onclick="openProjectModal('proj4')">
+                    <div class="aspect-[4/3] bg-arch-card relative overflow-hidden">
+                        <svg class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" viewBox="0 0 400 300" fill="none">
+                            <rect width="400" height="300" fill="#0f1218"/>
+                            <!-- Wavy Organic Canopy Ribbon -->
+                            <path d="M 50 200 Q 150 80, 250 200 T 350 150 L 350 260 L 50 260 Z" fill="#252c3b" stroke="#c8a97e" stroke-width="1.5"/>
+                            <path d="M 50 200 Q 150 120, 250 220 T 350 170" stroke="#c8a97e" stroke-width="1" stroke-dasharray="3 3"/>
+                        </svg>
+                        <div class="absolute top-4 left-4 font-mono text-[10px] bg-black/60 text-arch-accent px-2.5 py-1 rounded border border-arch-accent/30 uppercase tracking-widest">
+                            CONCEPT / 2023
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-arch-muted font-mono mb-2">
+                            <span>INCHEON, SOUTH KOREA</span>
+                            <span>600 m²</span>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white group-hover:text-arch-accent transition-colors mb-2">
+                            Bio-Mesh Parametric Pavilion
+                        </h3>
+                        <p class="text-gray-400 text-xs font-light line-clamp-2 leading-relaxed">
+                            Grasshopper 알고리즘으로 구조적 적합성을 최적화한 목재 유기체 파라메트릭 파빌리온.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-arch-accent">
+                            <span>VIEW DETAILS</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5: Urban Renewal Complex -->
+                <div class="project-card group glass-panel rounded-xl overflow-hidden hover-architectural cursor-pointer border border-white/10" data-category="commercial" onclick="openProjectModal('proj5')">
+                    <div class="aspect-[4/3] bg-arch-card relative overflow-hidden">
+                        <svg class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" viewBox="0 0 400 300" fill="none">
+                            <rect width="400" height="300" fill="#11141b"/>
+                            <rect x="80" y="100" width="100" height="160" fill="#222834" stroke="#c8a97e" stroke-width="1"/>
+                            <rect x="220" y="140" width="120" height="120" fill="#181d26" stroke="#c8a97e" stroke-width="1"/>
+                            <line x1="180" y1="180" x2="220" y2="180" stroke="#c8a97e" stroke-width="3"/>
+                        </svg>
+                        <div class="absolute top-4 left-4 font-mono text-[10px] bg-black/60 text-arch-accent px-2.5 py-1 rounded border border-arch-accent/30 uppercase tracking-widest">
+                            URBAN &amp; RENEWAL / 2022
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-arch-muted font-mono mb-2">
+                            <span>SEONGSU, SEOUL</span>
+                            <span>8,500 m²</span>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white group-hover:text-arch-accent transition-colors mb-2">
+                            Seongsu Timber Urban Hub
+                        </h3>
+                        <p class="text-gray-400 text-xs font-light line-clamp-2 leading-relaxed">
+                            폐공장 산업 유산을 중목구조 건축 기술로 재생한 복합 문화 상업 단지.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-arch-accent">
+                            <span>VIEW DETAILS</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 6: Eco Courtyard House -->
+                <div class="project-card group glass-panel rounded-xl overflow-hidden hover-architectural cursor-pointer border border-white/10" data-category="residential" onclick="openProjectModal('proj6')">
+                    <div class="aspect-[4/3] bg-arch-card relative overflow-hidden">
+                        <svg class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" viewBox="0 0 400 300" fill="none">
+                            <rect width="400" height="300" fill="#141720"/>
+                            <polygon points="100,220 200,160 300,220 200,260" fill="#2d3545" stroke="#c8a97e" stroke-width="1"/>
+                            <circle cx="200" cy="210" r="25" fill="#0f1115" stroke="#c8a97e" stroke-width="1"/>
+                        </svg>
+                        <div class="absolute top-4 left-4 font-mono text-[10px] bg-black/60 text-arch-accent px-2.5 py-1 rounded border border-arch-accent/30 uppercase tracking-widest">
+                            RESIDENTIAL / 2022
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between text-xs text-arch-muted font-mono mb-2">
+                            <span>JEJU, SOUTH KOREA</span>
+                            <span>380 m²</span>
+                        </div>
+                        <h3 class="font-display font-bold text-xl text-white group-hover:text-arch-accent transition-colors mb-2">
+                            Jeju Basalt Courtyard House
+                        </h3>
+                        <p class="text-gray-400 text-xs font-light line-clamp-2 leading-relaxed">
+                            제주 현무암 벽체와 중정(Courtyard) 구조를 통해 외부 바람을 제어하는 친환경 단독 주거.
+                        </p>
+                        <div class="mt-4 pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono text-arch-accent">
+                            <span>VIEW DETAILS</span>
+                            <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive 3D Spatial Lab Section -->
+    <section id="lab3d" class="py-24 bg-arch-card/80 border-y border-white/10 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8">
+                <div>
+                    <span class="text-xs text-arch-accent font-mono uppercase tracking-widest block mb-2">// REAL-TIME 3D ARCHITECTURAL VIEWPORT</span>
+                    <h2 class="font-display text-3xl sm:text-5xl font-bold tracking-tight">
+                        3D MASSING &amp; SUN LAB
+                    </h2>
+                </div>
+                <p class="text-arch-muted text-xs font-mono mt-4 md:mt-0">
+                    <i class="fa-solid fa-hand-pointer text-arch-accent"></i> 마우스로 드래그하여 3D 모델을 회전하고 태양 고도를 조절하세요.
+                </p>
+            </div>
+
+            <!-- 3D Viewport Box -->
+            <div class="relative rounded-2xl overflow-hidden border border-white/15 bg-black/80 shadow-2xl">
+                <!-- Viewport Canvas Container -->
+                <div class="w-full h-[550px] relative cursor-grab active:cursor-grabbing" id="threeCanvasContainer">
+                    <!-- ThreeJS Canvas will be appended here -->
+                </div>
+
+                <!-- Floating Toolbar Overlay Controls -->
+                <div class="absolute top-6 left-6 glass-panel p-4 rounded-xl border border-white/10 max-w-xs space-y-4 z-20">
+                    <div>
+                        <span class="text-[10px] text-arch-accent font-mono uppercase tracking-widest block mb-1">Display Mode</span>
+                        <div class="flex gap-2 font-mono text-xs">
+                            <button id="btnShaded" class="px-3 py-1.5 rounded bg-arch-accent text-black font-bold">Shaded</button>
+                            <button id="btnWireframe" class="px-3 py-1.5 rounded bg-white/10 text-white hover:bg-white/20">Wireframe</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1">
+                            <span class="text-[10px] text-arch-accent font-mono uppercase tracking-widest">Sun Position (Daylight)</span>
+                            <span id="sunTimeText" class="text-xs font-mono text-white">14:00 (PM)</span>
+                        </div>
+                        <input type="range" id="sunSlider" min="6" max="18" step="0.5" value="14" class="w-full accent-arch-accent cursor-pointer">
+                    </div>
+
+                    <div>
+                        <span class="text-[10px] text-arch-accent font-mono uppercase tracking-widest block mb-1">Architectural Form</span>
+                        <select id="modelSelector" class="w-full bg-arch-dark border border-white/20 text-white text-xs font-mono rounded px-2.5 py-1.5 focus:outline-none focus:border-arch-accent">
+                            <option value="cantilever">Parametric Cantilever Villa</option>
+                            <option value="tower">Kinetic Spiral Tower</option>
+                            <option value="pavilion">Wavy Roof Pavilion</option>
+                        </select>
+                    </div>
+
+                    <button id="resetCamBtn" class="w-full py-2 bg-white/10 hover:bg-white/20 text-white font-mono text-xs rounded transition-colors flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrows-rotate text-xs"></i> Reset Camera View
+                    </button>
+                </div>
+
+                <!-- Viewport Metadata Footer Overlay -->
+                <div class="absolute bottom-6 right-6 glass-panel px-4 py-3 rounded-lg border border-white/10 text-right z-20 hidden sm:block">
+                    <p class="text-xs font-mono text-arch-accent">LIVE ENVIRONMENT STUDY</p>
+                    <p class="text-xs font-mono text-white/80">LAT: 37.5665° N | LON: 126.9780° E</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blueprint / Architectural Drawings Section -->
+    <section id="blueprint" class="py-24 relative bg-grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                    <span class="text-xs text-arch-accent font-mono uppercase tracking-widest block mb-2">// TECHNICAL DRAWINGS &amp; SCHEMATICS</span>
+                    <h2 class="font-display text-3xl sm:text-5xl font-bold tracking-tight">
+                        INTERACTIVE FLOOR PLAN
+                    </h2>
+                </div>
+                <p class="text-arch-muted text-sm max-w-md font-light mt-4 md:mt-0">
+                    레이어 버튼을 클릭하여 도면의 구조체, 가구 배치, 치수선 레이어를 실시간으로 온/오프 토글해 보세요.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <!-- Blueprint Viewer Canvas Side -->
+                <div class="lg:col-span-8">
+                    <div class="glass-panel p-4 rounded-2xl border border-white/15 bg-black/90 relative">
+                        <!-- Blueprint Header Controls -->
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-white/10 font-mono text-xs">
+                            <span class="text-arch-accent flex items-center gap-2">
+                                <i class="fa-solid fa-file-contract"></i> DWG_PRISM_RESIDENCE_L1.dwg
+                            </span>
+                            <div class="flex items-center gap-2">
+                                <span class="text-arch-muted">SCALE 1:100</span>
+                            </div>
+                        </div>
+
+                        <!-- Canvas Drawing Area -->
+                        <div class="aspect-[16/10] w-full bg-[#0b101d] rounded-lg relative overflow-hidden border border-blue-900/40 flex items-center justify-center" id="blueprintCanvasBox">
+                            <canvas id="blueprintCanvas" class="w-full h-full block"></canvas>
+                        </div>
+
+                        <!-- Layer Control Toggles -->
+                        <div class="mt-4 flex flex-wrap items-center justify-between gap-3 pt-2">
+                            <div class="flex items-center gap-2 font-mono text-xs">
+                                <span class="text-arch-muted mr-2">LAYERS:</span>
+                                <button id="layerWalls" class="px-3 py-1.5 rounded bg-blue-600/30 text-blue-300 border border-blue-500/50 flex items-center gap-1.5 font-semibold">
+                                    <i class="fa-solid fa-square text-[10px]"></i> Structure Walls
+                                </button>
+                                <button id="layerFurniture" class="px-3 py-1.5 rounded bg-emerald-600/30 text-emerald-300 border border-emerald-500/50 flex items-center gap-1.5 font-semibold">
+                                    <i class="fa-solid fa-couch text-[10px]"></i> Furniture
+                                </button>
+                                <button id="layerDims" class="px-3 py-1.5 rounded bg-amber-600/30 text-amber-300 border border-amber-500/50 flex items-center gap-1.5 font-semibold">
+                                    <i class="fa-solid fa-ruler text-[10px]"></i> Dimensions
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Drawing Specs Info Card -->
+                <div class="lg:col-span-4 space-y-6">
+                    <div class="glass-panel p-6 rounded-xl border border-white/10">
+                        <h3 class="font-display font-bold text-xl text-white mb-4 border-b border-white/10 pb-3">
+                            Project Blueprint Specs
+                        </h3>
+
+                        <dl class="space-y-4 font-mono text-xs">
+                            <div class="flex justify-between border-b border-white/5 pb-2">
+                                <dt class="text-arch-muted">Total Gross Area</dt>
+                                <dd class="text-white font-bold">452.80 m²</dd>
+                            </div>
+                            <div class="flex justify-between border-b border-white/5 pb-2">
+                                <dt class="text-arch-muted">Building Coverage Ratio</dt>
+                                <dd class="text-white font-bold">38.4 %</dd>
+                            </div>
+                            <div class="flex justify-between border-b border-white/5 pb-2">
+                                <dt class="text-arch-muted">Structural System</dt>
+                                <dd class="text-white font-bold">RC + Steel Truss</dd>
+                            </div>
+                            <div class="flex justify-between border-b border-white/5 pb-2">
+                                <dt class="text-arch-muted">Exterior Finish</dt>
+                                <dd class="text-white font-bold">Exposed Concrete &amp; Low-E</dd>
+                            </div>
+                            <div class="flex justify-between border-b border-white/5 pb-2">
+                                <dt class="text-arch-muted">Floors</dt>
+                                <dd class="text-white font-bold">2 Stories + Roof Terrace</dd>
+                            </div>
+                        </dl>
+                    </div>
+
+                    <div class="glass-panel p-6 rounded-xl border border-white/10 bg-arch-accent/5">
+                        <div class="flex gap-3">
+                            <i class="fa-solid fa-circle-info text-arch-accent text-lg"></i>
+                            <div>
+                                <h4 class="text-white text-sm font-bold mb-1">Architect's Design Note</h4>
+                                <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                    남향으로 배치된 전면 유창을 통해 겨울철 난방 에너지를 24% 절감할 수 있으며, 중앙 중정을 통한 자연 통풍 구조를 확립했습니다.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Awards Section -->
+    <section id="experience" class="py-24 bg-arch-card/40 border-t border-white/10 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Left: Career Timeline -->
+                <div class="lg:col-span-7">
+                    <span class="text-xs text-arch-accent font-mono uppercase tracking-widest block mb-2">// EXPERIENCE &amp; CHRONOLOGY</span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-10">
+                        CAREER TIMELINE
+                    </h2>
+
+                    <div class="space-y-8 relative before:absolute before:inset-0 before:left-3.5 before:w-0.5 before:bg-white/10">
+                        
+                        <!-- Timeline Item 1 -->
+                        <div class="relative pl-10 group">
+                            <div class="absolute left-1.5 top-1.5 w-4 h-4 rounded-full border-2 border-arch-accent bg-arch-dark group-hover:bg-arch-accent transition-colors"></div>
+                            <div class="glass-panel p-6 rounded-xl border border-white/10">
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                    <span class="font-mono text-xs text-arch-accent font-bold">2021 — PRESENT</span>
+                                    <span class="text-xs font-mono text-arch-muted">SEOUL, KOREA</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-1">Studio MW Architecture (스튜디오 MW 건축사사무소)</h3>
+                                <p class="text-xs font-mono text-arch-accent mb-3">Principal Architect / 대표 건축가</p>
+                                <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                    주거 및 중소규모 상업 건축 설계 총괄, 파라메트릭 공간 연출 연구 및 친환경 주거 프로젝트 12건 이상 총괄 지휘.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 2 -->
+                        <div class="relative pl-10 group">
+                            <div class="absolute left-1.5 top-1.5 w-4 h-4 rounded-full border-2 border-white/30 bg-arch-dark group-hover:border-arch-accent transition-colors"></div>
+                            <div class="glass-panel p-6 rounded-xl border border-white/10">
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                    <span class="font-mono text-xs text-arch-accent font-bold">2018 — 2021</span>
+                                    <span class="text-xs font-mono text-arch-muted">SEOUL, KOREA</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-1">SANAA &amp; Partners Architects</h3>
+                                <p class="text-xs font-mono text-arch-accent mb-3">Senior Project Architect / 수석 디자이너</p>
+                                <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                    공공 복합 문화시설 국제 공모전 담당 및 Revit 기반의 BIM 프레임워크 구축.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 3 -->
+                        <div class="relative pl-10 group">
+                            <div class="absolute left-1.5 top-1.5 w-4 h-4 rounded-full border-2 border-white/30 bg-arch-dark group-hover:border-arch-accent transition-colors"></div>
+                            <div class="glass-panel p-6 rounded-xl border border-white/10">
+                                <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                                    <span class="font-mono text-xs text-arch-accent font-bold">2016 — 2018</span>
+                                    <span class="text-xs font-mono text-arch-muted">SEOUL, KOREA</span>
+                                </div>
+                                <h3 class="text-lg font-bold text-white mb-1">Seoul National University</h3>
+                                <p class="text-xs font-mono text-arch-accent mb-3">Master of Architecture (M.Arch)</p>
+                                <p class="text-arch-muted text-xs font-light leading-relaxed">
+                                    건축학과 석사 졸업 (논문: '알고리즘 기반 키네틱 파사드의 에너지 효율 최적화').
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right: Awards & Publications -->
+                <div class="lg:col-span-5 space-y-8">
+                    <div>
+                        <span class="text-xs text-arch-accent font-mono uppercase tracking-widest block mb-2">// RECOGNITION</span>
+                        <h2 class="font-display text-3xl sm:text-4xl font-bold tracking-tight mb-10">
+                            HONORS &amp; AWARDS
+                        </h2>
+
+                        <div class="space-y-4">
+                            <div class="glass-panel p-5 rounded-xl border border-white/10 flex items-start gap-4">
+                                <div class="w-10 h-10 rounded bg-arch-accent/10 border border-arch-accent/30 text-arch-accent flex items-center justify-center font-bold text-lg shrink-0">
+                                    <i class="fa-solid fa-trophy"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono text-arch-accent">2024</span>
+                                    <h4 class="text-white font-bold text-sm">Korea Architecture Excellence Gold Award</h4>
+                                    <p class="text-arch-muted text-xs">대한민국 건축문화대상 우수상 (The Prism Residence)</p>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel p-5 rounded-xl border border-white/10 flex items-start gap-4">
+                                <div class="w-10 h-10 rounded bg-arch-accent/10 border border-arch-accent/30 text-arch-accent flex items-center justify-center font-bold text-lg shrink-0">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono text-arch-accent">2023</span>
+                                    <h4 class="text-white font-bold text-sm">Asia Design Prize — Winner</h4>
+                                    <p class="text-arch-muted text-xs">아시아 디자인 프라이즈 본상 (Nexus Kinetic Tower)</p>
+                                </div>
+                            </div>
+
+                            <div class="glass-panel p-5 rounded-xl border border-white/10 flex items-start gap-4">
+                                <div class="w-10 h-10 rounded bg-arch-accent/10 border border-arch-accent/30 text-arch-accent flex items-center justify-center font-bold text-lg shrink-0">
+                                    <i class="fa-solid fa-certificate"></i>
+                                </div>
+                                <div>
+                                    <span class="text-[10px] font-mono text-arch-accent">2021</span>
+                                    <h4 class="text-white font-bold text-sm">Young Architect Competition Top 10</h4>
+                                    <p class="text-arch-muted text-xs">신진 건축가 공모전 Top 10 선정</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Download Resume Button Box -->
+                    <div class="glass-panel p-6 rounded-xl border border-arch-accent/30 text-center space-y-4 bg-arch-accent/5">
+                        <i class="fa-solid fa-file-pdf text-3xl text-arch-accent"></i>
+                        <div>
+                            <h4 class="text-white font-bold text-base">Complete CV &amp; Portfolio PDF</h4>
+                            <p class="text-arch-muted text-xs">상세 경력 및 도면집이 수록된 PDF 포트폴리오 다운로드</p>
+                        </div>
+                        <button onclick="downloadCV()" class="w-full py-3 bg-arch-accent text-black font-mono font-bold text-xs uppercase tracking-widest hover:bg-arch-accentHover transition-colors rounded">
+                            DOWNLOAD PORTFOLIO (PDF 24MB)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-24 relative bg-grid-pattern">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="max-w-2xl mb-16">
+                <span class="text-xs text-arch-accent font-mono uppercase tracking-widest block mb-2">// START A PROJECT</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-bold tracking-tight">
+                    LET'S BUILD SOMETHING EXTRAORDINARY.
+                </h2>
+                <p class="text-arch-muted text-sm mt-4 font-light">
+                    신축, 리모델링, 파라메트릭 자문 및 건축 의뢰 문의는 아래 폼이나 연락처를 통해 편하게 전달 부탁드립니다.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+                <!-- Left: Interactive Contact Form -->
+                <div class="lg:col-span-7">
+                    <form id="contactForm" class="glass-panel p-8 rounded-2xl border border-white/15 space-y-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-mono text-arch-accent uppercase mb-2">YOUR NAME *</label>
+                                <input type="text" required placeholder="홍길동" class="w-full bg-arch-dark border border-white/20 rounded px-4 py-3 text-white text-sm focus:outline-none focus:border-arch-accent transition-colors">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-arch-accent uppercase mb-2">EMAIL ADDRESS *</label>
+                                <input type="email" required placeholder="name@example.com" class="w-full bg-arch-dark border border-white/20 rounded px-4 py-3 text-white text-sm focus:outline-none focus:border-arch-accent transition-colors">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-xs font-mono text-arch-accent uppercase mb-2">PROJECT TYPE</label>
+                                <select class="w-full bg-arch-dark border border-white/20 rounded px-4 py-3 text-white text-sm focus:outline-none focus:border-arch-accent transition-colors">
+                                    <option value="residential">Residential (주거 건축)</option>
+                                    <option value="commercial">Commercial (상업/오피스)</option>
+                                    <option value="renovation">Renovation (리모델링)</option>
+                                    <option value="consulting">Parametric Design Consulting</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-xs font-mono text-arch-accent uppercase mb-2">BUDGET RANGE</label>
+                                <select class="w-full bg-arch-dark border border-white/20 rounded px-4 py-3 text-white text-sm focus:outline-none focus:border-arch-accent transition-colors">
+                                    <option value="1">5억 원 미만</option>
+                                    <option value="2">5억 원 ~ 15억 원</option>
+                                    <option value="3">15억 원 이상</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-mono text-arch-accent uppercase mb-2">PROJECT DETAILS &amp; LOCATION *</label>
+                            <textarea required rows="5" placeholder="대지 위치, 예상 규모, 디자인 요구사항 등을 자유롭게 기재해 주세요." class="w-full bg-arch-dark border border-white/20 rounded px-4 py-3 text-white text-sm focus:outline-none focus:border-arch-accent transition-colors resize-none"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 bg-arch-accent text-black font-mono font-bold text-sm uppercase tracking-widest hover:bg-arch-accentHover transition-all rounded shadow-lg shadow-arch-accent/20 flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-paper-plane"></i> SEND INQUIRY MESSAGE
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Right: Office Info & Simulated Map Graphic -->
+                <div class="lg:col-span-5 space-y-6">
+                    <div class="glass-panel p-8 rounded-2xl border border-white/15 space-y-6">
+                        <h3 class="font-display font-bold text-xl text-white">OFFICE &amp; STUDIO</h3>
+
+                        <div class="space-y-4 text-sm font-light">
+                            <div class="flex items-start gap-4">
+                                <i class="fa-solid fa-location-dot text-arch-accent mt-1"></i>
+                                <div>
+                                    <strong class="text-white block font-mono text-xs uppercase">Studio Location</strong>
+                                    <p class="text-arch-muted">서울특별시 강남구 테헤란로 427, 스튜디오 MW 6층</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <i class="fa-solid fa-envelope text-arch-accent mt-1"></i>
+                                <div>
+                                    <strong class="text-white block font-mono text-xs uppercase">Direct Email</strong>
+                                    <p class="text-arch-muted">minwoo.kim@arch-studio-mw.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-start gap-4">
+                                <i class="fa-solid fa-phone text-arch-accent mt-1"></i>
+                                <div>
+                                    <strong class="text-white block font-mono text-xs uppercase">Telephone</strong>
+                                    <p class="text-arch-muted">+82 (0)2-554-9812</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Social Architectural Portals -->
+                        <div class="pt-4 border-t border-white/10">
+                            <span class="text-[10px] text-arch-accent font-mono uppercase block mb-3">PUBLISHED PLATFORMS</span>
+                            <div class="flex gap-3 text-lg">
+                                <a href="#" class="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-arch-accent hover:border-arch-accent transition-colors">
+                                    <i class="fa-brands fa-instagram"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-arch-accent hover:border-arch-accent transition-colors">
+                                    <i class="fa-brands fa-linkedin"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-arch-accent hover:border-arch-accent transition-colors">
+                                    <i class="fa-brands fa-behance"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 rounded bg-white/5 border border-white/10 flex items-center justify-center text-white hover:text-arch-accent hover:border-arch-accent transition-colors">
+                                    <i class="fa-solid fa-globe"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Simulated Studio Map Pin Graphic -->
+                    <div class="aspect-[16/9] rounded-2xl glass-panel overflow-hidden relative border border-white/15 flex items-center justify-center">
+                        <svg class="w-full h-full object-cover" viewBox="0 0 400 200" fill="none">
+                            <rect width="400" height="200" fill="#12151b"/>
+                            <!-- Street lines grid -->
+                            <path d="M 0 60 L 400 60 M 0 140 L 400 140 M 120 0 L 120 200 M 280 0 L 280 200" stroke="#252b36" stroke-width="6"/>
+                            <path d="M 50 0 L 350 200" stroke="#1f2530" stroke-width="3"/>
+                            <!-- Location pin -->
+                            <circle cx="280" cy="60" r="12" fill="#c8a97e" fill-opacity="0.3"/>
+                            <circle cx="280" cy="60" r="6" fill="#c8a97e"/>
+                            <text x="295" y="65" fill="#ffffff" font-family="Space Mono" font-size="10">STUDIO MW</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Details Lightbox Modal -->
+    <div id="projectModal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4 sm:p-6">
+        <div class="glass-panel w-full max-w-4xl max-h-[90vh] rounded-2xl border border-white/20 overflow-y-auto relative flex flex-col" id="modalContent">
+            <!-- Close Modal Button -->
+            <button onclick="closeProjectModal()" class="absolute top-4 right-4 z-30 w-10 h-10 rounded-full bg-black/60 border border-white/20 text-white hover:text-arch-accent flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- Modal Header Graphic -->
+            <div class="aspect-[16/8] bg-arch-dark relative overflow-hidden flex items-center justify-center border-b border-white/10" id="modalHeaderGraphic">
+                <!-- Graphic SVG injected via JS -->
+            </div>
+
+            <!-- Modal Body Details -->
+            <div class="p-8 space-y-6">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <div>
+                        <span id="modalCategory" class="text-xs font-mono text-arch-accent uppercase tracking-widest block">CATEGORY</span>
+                        <h2 id="modalTitle" class="font-display font-bold text-3xl text-white mt-1">Project Title</h2>
+                    </div>
+                    <div class="text-right font-mono text-xs text-arch-muted">
+                        <p id="modalLocation">Location</p>
+                        <p id="modalArea" class="text-white font-bold">000 m²</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4 border-y border-white/10 font-mono text-xs">
+                    <div>
+                        <span class="text-arch-muted block">YEAR</span>
+                        <span id="modalYear" class="text-white font-bold">2024</span>
+                    </div>
+                    <div>
+                        <span class="text-arch-muted block">ROLE</span>
+                        <span id="modalRole" class="text-white font-bold">Lead Spatial Architect</span>
+                    </div>
+                    <div>
+                        <span class="text-arch-muted block">STATUS</span>
+                        <span id="modalStatus" class="text-white font-bold">Completed / Built</span>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold text-base mb-2">Architectural Concept &amp; Design Narrative</h3>
+                    <p id="modalDescription" class="text-gray-300 font-light text-sm leading-relaxed">
+                        프로젝트 상세 설명...
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-bold text-base mb-3">Key Material Palette</h3>
+                    <div id="modalMaterials" class="flex flex-wrap gap-2 font-mono text-xs">
+                        <!-- Material badges -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast Box -->
+    <div id="toast" class="fixed bottom-8 right-8 z-50 glass-panel border border-arch-accent text-white px-6 py-4 rounded-xl shadow-2xl transition-all duration-300 transform translate-y-20 opacity-0 flex items-center gap-3 font-mono text-xs">
+        <i class="fa-solid fa-circle-check text-arch-accent text-lg"></i>
+        <span id="toastMsg">Notification message</span>
+    </div>
+
+    <!-- Footer Section -->
+    <footer class="py-12 bg-black border-t border-white/10 font-mono text-xs text-arch-muted">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-8 h-8 border border-arch-accent text-arch-accent flex items-center justify-center font-bold">MW</div>
+                <span>© 2026 KIM MIN WOO ARCHITECTURE. ALL RIGHTS RESERVED.</span>
+            </div>
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-arch-accent transition-colors">PRIVACY POLICY</a>
+                <a href="#" class="hover:text-arch-accent transition-colors">TERMS OF SERVICE</a>
+                <a href="#bodyElement" class="w-8 h-8 rounded border border-white/20 flex items-center justify-center hover:border-arch-accent hover:text-arch-accent transition-colors">
+                    <i class="fa-solid fa-arrow-up"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Theme Switcher Logic
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const bodyElement = document.getElementById('bodyElement');
+
+        themeToggle.addEventListener('click', () => {
+            if (bodyElement.classList.contains('dark')) {
+                bodyElement.classList.remove('dark');
+                bodyElement.classList.remove('bg-arch-dark');
+                bodyElement.classList.add('bg-arch-lightBg');
+                bodyElement.classList.add('text-gray-900');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                bodyElement.classList.add('dark');
+                bodyElement.classList.add('bg-arch-dark');
+                bodyElement.classList.remove('bg-arch-lightBg');
+                bodyElement.classList.remove('text-gray-900');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileNav = document.getElementById('mobileNav');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileNav.classList.toggle('hidden');
+            mobileNav.classList.toggle('flex');
+        });
+
+        // Project Filtering Logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const projectCards = document.querySelectorAll('.project-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-arch-accent', 'text-black', 'font-bold');
+                    b.classList.add('text-arch-muted');
+                });
+                btn.classList.add('active', 'bg-arch-accent', 'text-black', 'font-bold');
+                btn.classList.remove('text-arch-muted');
+
+                const filter = btn.getAttribute('data-filter');
+                projectCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Modal Data
+        const projectData = {
+            proj1: {
+                title: "The Prism Residence (프리즘 하우스)",
+                category: "RESIDENTIAL",
+                location: "SEOUL, SOUTH KOREA",
+                area: "450 m²",
+                year: "2024",
+                role: "Lead Principal Architect",
+                status: "Built / Completed",
+                description: "북한산 자락의 경사 지형을 자연스럽게 수용한 단독 주택입니다. 사계절에 따라 변화하는 태양 고도를 매싱에 수용하여 내부 거실 공간 깊숙이 빛이 도달하도록 설계되었습니다. 외벽은 노출 콘크리트와 Low-E 복층 유리를 사용하여 열효율성을 극대화했습니다.",
+                materials: ["Exposed Concrete", "Low-E Triple Glass", "Anodized Aluminum", "Teak Wood Panel"],
+                graphic: `<svg class="w-full h-full" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#13161c"/><polygon points="100,240 280,140 500,200 500,270 100,270" fill="#1c212b" stroke="#c8a97e" stroke-width="2"/><line x1="150" y1="210" x2="250" y2="155" stroke="#7e9cc8" stroke-width="3"/></svg>`
+            },
+            proj2: {
+                title: "Nexus Kinetic Tower (네커스 타워)",
+                category: "COMMERCIAL",
+                location: "PANGYO TECHNO VALLEY",
+                area: "12,800 m²",
+                year: "2023",
+                role: "Senior Project Architect",
+                status: "Built / Completed",
+                description: "판교 테크노밸리에 위치한 18층 규모의 오피스 타워로, 건축물 외벽에 센서 기반 키네틱 일조 루버 시스템을 도입했습니다. 외부 일사량에 따라 개폐율이 자동으로 조절되어 연간 건물 냉방 부하를 31% 감축합니다.",
+                materials: ["Kinetic Steel Louvers", "Structural Glass Curtain Wall", "Titanium Zinc"],
+                graphic: `<svg class="w-full h-full" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#0e1117"/><polygon points="220,280 220,40 380,20 380,280" fill="#1e2430" stroke="#c8a97e" stroke-width="2"/></svg>`
+            },
+            proj3: {
+                title: "Ocean Horizon Art Museum (해양 아트 뮤지엄)",
+                category: "CULTURAL",
+                location: "BUSAN, SOUTH KOREA",
+                area: "3,200 m²",
+                year: "2024",
+                role: "Design Lead",
+                status: "Under Construction",
+                description: "부산 해안선에 바로 접한 국립 문화 미술관입니다. 바다를 향해 28미터 돌출된 캔틸레버 전시실은 방문객들에게 수평선 위에 떠 있는 듯한 초현실적 공간 경험을 제공합니다.",
+                materials: ["White Ultra-High Performance Concrete (UHPC)", "Stainless Steel", "Laminated Glass"],
+                graphic: `<svg class="w-full h-full" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#12161f"/><polygon points="100,160 480,160 420,240 160,240" fill="#2e374a" stroke="#c8a97e" stroke-width="2"/></svg>`
+            },
+            proj4: {
+                title: "Bio-Mesh Parametric Pavilion",
+                category: "CONCEPT / PARAMETRIC",
+                location: "INCHEON, SOUTH KOREA",
+                area: "600 m²",
+                year: "2023",
+                role: "Research & Design Lead",
+                status: "Prototype Complete",
+                description: "Grasshopper의 파라메트릭 구조 최적화 루틴을 통해 최소 부재로 최대 하중을 견디도록 디자인된 야외 곡면 목재 파빌리온입니다. 3D 로봇 팔 가공 기법을 적용하였습니다.",
+                materials: ["Glulam Curved Timber", "ETFE Air Cushion Membrane"],
+                graphic: `<svg class="w-full h-full" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#0f1218"/><path d="M 80 200 Q 250 60, 520 200 Z" fill="#252c3b" stroke="#c8a97e" stroke-width="2"/></svg>`
+            },
+            proj5: {
+                title: "Seongsu Timber Urban Hub",
+                category: "COMMERCIAL / URBAN RENEWAL",
+                location: "SEOUL, SOUTH KOREA",
+                area: "8,500 m²",
+                year: "2022",
+                role: "Project Director",
+                status: "Built",
+                description: "성수동의 옛 붉은 벽돌 레미콘 공장 터를 친환경 목구조(Mass Timber)로 재탄생시킨 도시 재생 프로젝트입니다.",
+                materials: ["Cross-Laminated Timber (CLT)", "Recycled Red Brick", "Cortenseel"],
+                graphic: `<svg class="w-full h-full" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#11141b"/><rect x="150" y="80" width="140" height="180" fill="#222834" stroke="#c8a97e" stroke-width="2"/></svg>`
+            },
+            proj6: {
+                title: "Jeju Basalt Courtyard House",
+                category: "RESIDENTIAL",
+                location: "JEJU ISLAND",
+                area: "380 m²",
+                year: "2022",
+                role: "Principal Architect",
+                status: "Built",
+                description: "제주의 강한 돌풍과 기후에 대응하기 위해 현무암 담장으로 중정을 감싸 안은 친환경 힐링 주거 공간입니다.",
+                materials: ["Jeju Basalt Stone", "Cedar Wood", "Double Glazing"],
+                graphic: `<svg class="w-full h-full" viewBox="0 0 600 300" fill="none"><rect width="600" height="300" fill="#141720"/><polygon points="150,220 300,140 450,220 300,260" fill="#2d3545" stroke="#c8a97e" stroke-width="2"/></svg>`
+            }
+        };
+
+        function openProjectModal(id) {
+            const data = projectData[id];
+            if (!data) return;
+
+            document.getElementById('modalTitle').innerText = data.title;
+            document.getElementById('modalCategory').innerText = data.category;
+            document.getElementById('modalLocation').innerText = data.location;
+            document.getElementById('modalArea').innerText = data.area;
+            document.getElementById('modalYear').innerText = data.year;
+            document.getElementById('modalRole').innerText = data.role;
+            document.getElementById('modalStatus').innerText = data.status;
+            document.getElementById('modalDescription').innerText = data.description;
+            document.getElementById('modalHeaderGraphic').innerHTML = data.graphic;
+
+            const matContainer = document.getElementById('modalMaterials');
+            matContainer.innerHTML = '';
+            data.materials.forEach(mat => {
+                const badge = document.createElement('span');
+                badge.className = 'px-3 py-1.5 rounded bg-white/10 text-white border border-white/10';
+                badge.innerText = mat;
+                matContainer.appendChild(badge);
+            });
+
+            document.getElementById('projectModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            document.getElementById('projectModal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        let scene, camera, renderer, currentMesh, dirLight, ambientLight;
+        let isMouseDown = false, mouseX = 0, mouseY = 0;
+        let targetRotationY = 0, targetRotationX = 0;
+
+        function initThreeViewport() {
+            const container = document.getElementById('threeCanvasContainer');
+            if (!container) return;
+
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x0e1116);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+            camera.position.set(15, 12, 20);
+            camera.lookAt(0, 2, 0);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            container.appendChild(renderer.domElement);
+
+            // Ground plane (Architectural site grid)
+            const gridHelper = new THREE.GridHelper(30, 30, 0xc8a97e, 0x2a303d);
+            gridHelper.position.y = 0;
+            scene.add(gridHelper);
+
+            // Lighting setup
+            ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            dirLight = new THREE.DirectionalLight(0xffeacc, 1.2);
+            dirLight.castShadow = true;
+            dirLight.position.set(10, 15, 10);
+            dirLight.shadow.mapSize.width = 1024;
+            dirLight.shadow.mapSize.height = 1024;
+            scene.add(dirLight);
+
+            // Initial model load
+            load3DModel('cantilever');
+
+            // Controls listeners
+            container.addEventListener('mousedown', (e) => {
+                isMouseDown = true;
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            window.addEventListener('mouseup', () => isMouseDown = false);
+
+            container.addEventListener('mousemove', (e) => {
+                if (!isMouseDown) return;
+                const deltaX = e.clientX - mouseX;
+                const deltaY = e.clientY - mouseY;
+
+                if (currentMesh) {
+                    currentMesh.rotation.y += deltaX * 0.008;
+                    currentMesh.rotation.x += deltaY * 0.008;
+                }
+
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            window.addEventListener('resize', () => {
+                if (!container) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            animateThree();
+        }
+
+        function load3DModel(type) {
+            if (currentMesh) scene.remove(currentMesh);
+
+            const group = new THREE.Group();
+            const material = new THREE.MeshStandardMaterial({
+                color: 0x3a4252,
+                roughness: 0.3,
+                metalness: 0.2,
+                wireframe: false
+            });
+
+            const accentMat = new THREE.MeshStandardMaterial({
+                color: 0xc8a97e,
+                roughness: 0.2,
+                metalness: 0.5
+            });
+
+            if (type === 'cantilever') {
+                // Main building mass
+                const baseGeo = new THREE.BoxGeometry(6, 4, 6);
+                const base = new THREE.Mesh(baseGeo, material);
+                base.position.y = 2;
+                base.castShadow = true;
+                base.receiveShadow = true;
+                group.add(base);
+
+                // Cantilever top volume
+                const topGeo = new THREE.BoxGeometry(10, 3, 5);
+                const top = new THREE.Mesh(topGeo, accentMat);
+                top.position.set(2, 5.5, 0);
+                top.castShadow = true;
+                group.add(top);
+
+                // Glass slit
+                const glassGeo = new THREE.BoxGeometry(5.8, 0.8, 5.8);
+                const glassMat = new THREE.MeshStandardMaterial({ color: 0x88ccff, roughness: 0.1 });
+                const glass = new THREE.Mesh(glassGeo, glassMat);
+                glass.position.y = 3.8;
+                group.add(glass);
+
+            } else if (type === 'tower') {
+                const levels = 8;
+                for (let i = 0; i < levels; i++) {
+                    const boxGeo = new THREE.BoxGeometry(5 - i*0.3, 1.2, 5 - i*0.3);
+                    const levelMesh = new THREE.Mesh(boxGeo, i % 2 === 0 ? material : accentMat);
+                    levelMesh.position.y = i * 1.3 + 0.6;
+                    levelMesh.rotation.y = i * 0.25;
+                    levelMesh.castShadow = true;
+                    group.add(levelMesh);
+                }
+            } else if (type === 'pavilion') {
+                const baseGeo = new THREE.CylinderGeometry(4, 4, 0.4, 32);
+                const base = new THREE.Mesh(baseGeo, material);
+                base.position.y = 0.2;
+                group.add(base);
+
+                const roofGeo = new THREE.TorusKnotGeometry(3, 0.8, 64, 16);
+                const roof = new THREE.Mesh(roofGeo, accentMat);
+                roof.position.y = 3.5;
+                roof.rotation.x = Math.PI / 2;
+                roof.castShadow = true;
+                group.add(roof);
+            }
+
+            currentMesh = group;
+            scene.add(currentMesh);
+        }
+
+        function animateThree() {
+            requestAnimationFrame(animateThree);
+            if (currentMesh && !isMouseDown) {
+                currentMesh.rotation.y += 0.002;
+            }
+            renderer.render(scene, camera);
+        }
+
+        document.getElementById('btnShaded').addEventListener('click', function() {
+            if (!currentMesh) return;
+            currentMesh.traverse((child) => {
+                if (child.isMesh) child.material.wireframe = false;
+            });
+            this.classList.add('bg-arch-accent', 'text-black', 'font-bold');
+            document.getElementById('btnWireframe').classList.remove('bg-arch-accent', 'text-black', 'font-bold');
+        });
+
+        document.getElementById('btnWireframe').addEventListener('click', function() {
+            if (!currentMesh) return;
+            currentMesh.traverse((child) => {
+                if (child.isMesh) child.material.wireframe = true;
+            });
+            this.classList.add('bg-arch-accent', 'text-black', 'font-bold');
+            document.getElementById('btnShaded').classList.remove('bg-arch-accent', 'text-black', 'font-bold');
+        });
+
+        document.getElementById('sunSlider').addEventListener('input', (e) => {
+            const hour = parseFloat(e.target.value);
+            document.getElementById('sunTimeText').innerText = `${Math.floor(hour)}:00 (${hour >= 12 ? 'PM' : 'AM'})`;
+            
+            // Calculate light position based on daylight hours (6 to 18)
+            const angle = ((hour - 6) / 12) * Math.PI;
+            dirLight.position.x = Math.cos(angle) * 20;
+            dirLight.position.y = Math.sin(angle) * 20;
+            dirLight.intensity = Math.sin(angle) * 1.5;
+        });
+
+        document.getElementById('modelSelector').addEventListener('change', (e) => {
+            load3DModel(e.target.value);
+        });
+
+        document.getElementById('resetCamBtn').addEventListener('click', () => {
+            if (currentMesh) {
+                currentMesh.rotation.set(0, 0, 0);
+            }
+            camera.position.set(15, 12, 20);
+            camera.lookAt(0, 2, 0);
+        });
+
+        const bpCanvas = document.getElementById('blueprintCanvas');
+        let showWalls = true, showFurniture = true, showDims = true;
+
+        function renderBlueprint() {
+            if (!bpCanvas) return;
+            const ctx = bpCanvas.getContext('2d');
+            const box = document.getElementById('blueprintCanvasBox');
+            bpCanvas.width = box.clientWidth;
+            bpCanvas.height = box.clientHeight;
+
+            const w = bpCanvas.width;
+            const h = bpCanvas.height;
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Draw Background Grid
+            ctx.strokeStyle = '#1b2333';
+            ctx.lineWidth = 1;
+            const gridSize = 25;
+            for (let x = 0; x < w; x += gridSize) {
+                ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+            }
+            for (let y = 0; y < h; y += gridSize) {
+                ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke();
+            }
+
+            const cx = w / 2;
+            const cy = h / 2;
+
+            // Layer 1: Structural Walls
+            if (showWalls) {
+                ctx.strokeStyle = '#4a90e2';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(cx - 180, cy - 120, 360, 240);
+
+                // Interior rooms
+                ctx.beginPath();
+                ctx.moveTo(cx - 60, cy - 120); ctx.lineTo(cx - 60, cy + 120);
+                ctx.moveTo(cx - 60, cy); ctx.lineTo(cx + 180, cy);
+                ctx.stroke();
+
+                // Doors
+                ctx.strokeStyle = '#64b5f6';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(cx - 60, cy - 60, 30, 0, Math.PI / 2);
+                ctx.stroke();
+            }
+
+            // Layer 2: Furniture
+            if (showFurniture) {
+                ctx.fillStyle = '#2e7d32';
+                ctx.strokeStyle = '#81c784';
+                ctx.lineWidth = 1.5;
+
+                // Dining table
+                ctx.fillRect(cx - 150, cy - 80, 60, 40);
+                ctx.strokeRect(cx - 150, cy - 80, 60, 40);
+
+                // Living Sofa
+                ctx.fillRect(cx + 20, cy + 30, 100, 40);
+                ctx.strokeRect(cx + 20, cy + 30, 100, 40);
+            }
+
+            // Layer 3: Dimensions
+            if (showDims) {
+                ctx.strokeStyle = '#ffb74d';
+                ctx.fillStyle = '#ffb74d';
+                ctx.font = '10px Space Mono';
+                ctx.lineWidth = 1;
+
+                // Top dimension line
+                ctx.beginPath();
+                ctx.moveTo(cx - 180, cy - 140); ctx.lineTo(cx + 180, cy - 140);
+                ctx.stroke();
+                ctx.fillText('18.00 m', cx - 20, cy - 145);
+
+                // Left dimension line
+                ctx.beginPath();
+                ctx.moveTo(cx - 200, cy - 120); ctx.lineTo(cx - 200, cy + 120);
+                ctx.stroke();
+                ctx.fillText('12.00 m', cx - 240, cy + 5);
+            }
+        }
+
+        document.getElementById('layerWalls').addEventListener('click', function() {
+            showWalls = !showWalls;
+            this.classList.toggle('opacity-40');
+            renderBlueprint();
+        });
+
+        document.getElementById('layerFurniture').addEventListener('click', function() {
+            showFurniture = !showFurniture;
+            this.classList.toggle('opacity-40');
+            renderBlueprint();
+        });
+
+        document.getElementById('layerDims').addEventListener('click', function() {
+            showDims = !showDims;
+            this.classList.toggle('opacity-40');
+            renderBlueprint();
+        });
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            showToast('건축 상담 문의가 성공적으로 접수되었습니다!');
+            e.target.reset();
+        });
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3500);
+        }
+
+        function downloadCV() {
+            showToast('PDF 포트폴리오 다운로드가 시작되었습니다.');
+        }
+
+        // Window onload initialization
+        window.onload = function() {
+            initThreeViewport();
+            renderBlueprint();
+            window.addEventListener('resize', renderBlueprint);
+        };
+    </script>
+</body>
+</html>
